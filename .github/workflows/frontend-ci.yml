@@ -27,8 +27,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
-          cache-dependency-path: 'chatbot-widget/package-lock.json'
+
+      # Explicitly caching node_modules instead of using built-in npm cache
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: chatbot-widget/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('chatbot-widget/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm ci
