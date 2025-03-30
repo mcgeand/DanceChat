@@ -31,6 +31,5 @@
     "react": {
       "version": "detect"
     }
-  },
-  "max-warnings": 5
+  }
 } 

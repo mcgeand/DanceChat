@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@radix-ui)/)'",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext ts,tsx",
+    "lint": "eslint . --ext ts,tsx --max-warnings 5",
     "typecheck": "tsc --noEmit",
     "bundlewatch": "bundlewatch",
     "lighthouse": "lhci autorun"
