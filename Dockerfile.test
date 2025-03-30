@@ -1,0 +1,18 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies and Jest globally
+RUN npm install && npm install -g jest
+
+# Copy the rest of the application
+COPY . .
+
+# Set environment variables
+ENV NODE_ENV=test
+
+# Default command
+CMD ["npm", "test"] 
