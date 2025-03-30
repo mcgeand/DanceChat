@@ -29,8 +29,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          # Check out pull request HEAD commit instead of merge commit
-          ref: ${{ github.event.pull_request.head.sha }}
+          # For pull requests, check out the head of the PR
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || '' }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -49,10 +49,11 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git checkout ${{ github.head_ref }}
+          # No need for git checkout since we already checked out the correct branch
           git add package-lock.json
           git commit -m "Update package-lock.json to match package.json [skip ci]"
-          git push origin HEAD:${{ github.head_ref }}
+          # Use the head ref from the PR event
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -68,6 +69,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          # For pull requests, check out the head of the PR
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || '' }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -104,6 +107,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          # For pull requests, check out the head of the PR
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || '' }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
